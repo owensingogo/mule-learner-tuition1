@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173b8f">
+
+<title>Learner Login | Mule Learner Tuition</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+}
+
+.app{
+  max-width:480px;
+  min-height:100vh;
+  margin:auto;
+  background:#fff;
+  padding:30px 22px;
+}
+
+
+/* LOGO */
+
+.logo{
+  text-align:center;
+  margin-top:25px;
+}
+
+.logo-icon{
+  width:78px;
+  height:78px;
+  margin:auto;
+  border-radius:21px;
+  background:#2563eb;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:39px;
+}
+
+.logo h1{
+  margin-top:14px;
+  color:#173b8f;
+  font-size:23px;
+}
+
+.logo p{
+  margin-top:6px;
+  color:#6b7280;
+  font-size:13px;
+}
+
+
+/* WELCOME */
+
+.welcome{
+  margin-top:42px;
+}
+
+.welcome h2{
+  font-size:25px;
+  color:#172033;
+}
+
+.welcome > p{
+  margin-top:7px;
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.5;
+}
+
+
+/* FORM */
+
+.field{
+  margin-top:20px;
+}
+
+label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.phone-box{
+  display:flex;
+  gap:8px;
+}
+
+.country-code{
+  width:82px;
+  flex-shrink:0;
+  padding:14px 8px;
+  border:1px solid #d9e0eb;
+  border-radius:11px;
+  background:#f8fafc;
+  font-size:14px;
+  text-align:center;
+  color:#172033;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #d9e0eb;
+  border-radius:11px;
+  outline:none;
+  font-size:14px;
+  background:#fff;
+}
+
+input:focus{
+  border-color:#2563eb;
+}
+
+.password-box{
+  position:relative;
+}
+
+.password-box input{
+  padding-right:70px;
+}
+
+.show-password{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:transparent;
+  color:#2563eb;
+  font-size:11px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+
+/* BUTTON */
+
+.button{
+  width:100%;
+  padding:15px;
+  margin-top:25px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:#fff;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+
+/* MESSAGE */
+
+.message{
+  margin-top:14px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.5;
+}
+
+
+/* DIVIDER */
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:25px 0;
+  color:#9ca3af;
+  font-size:11px;
+}
+
+.divider::before,
+.divider::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:#e5e7eb;
+}
+
+
+/* REGISTER */
+
+.register{
+  text-align:center;
+  color:#6b7280;
+  font-size:13px;
+}
+
+.register a{
+  color:#2563eb;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+
+/* SECURITY */
+
+.security{
+  margin-top:25px;
+  padding:13px;
+  background:#f8fafc;
+  border:1px solid #e6ebf2;
+  border-radius:11px;
+  color:#6b7280;
+  font-size:11px;
+  line-height:1.5;
+  text-align:center;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+  <!-- LOGO -->
+
+  <div class="logo">
+
+    <div class="logo-icon">
+      📚
+    </div>
+
+    <h1>
+      MULE LEARNER TUITION
+    </h1>
+
+    <p>
+      Learn • Practice • Succeed
+    </p>
+
+  </div>
+
+
+  <!-- LOGIN -->
+
+  <div class="welcome">
+
+    <h2>
+      Welcome back 👋
+    </h2>
+
+    <p>
+      Sign in with your registered phone number
+      to continue your learning.
+    </p>
+
+
+    <!-- PHONE -->
+
+    <div class="field">
+
+      <label>
+        Phone Number
+      </label>
+
+      <div class="phone-box">
+
+        <div class="country-code">
+          🇿🇲 +260
+        </div>
+
+        <input
+          id="phone"
+          type="tel"
+          inputmode="numeric"
+          placeholder="97XXXXXXX"
+          autocomplete="tel"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- PASSWORD -->
+
+    <div class="field">
+
+      <label>
+        Password
+      </label>
+
+      <div class="password-box">
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        >
+
+        <button
+          type="button"
+          class="show-password"
+          onclick="togglePassword()">
+
+          Show
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOGIN BUTTON -->
+
+    <button
+      id="loginButton"
+      class="button"
+      onclick="login()">
+
+      Login
+
+    </button>
+
+
+    <!-- MESSAGE -->
+
+    <div
+      id="message"
+      class="message">
+    </div>
+
+
+    <div class="divider">
+      New learner?
+    </div>
+
+
+    <!-- REGISTER -->
+
+    <div class="register">
+
+      Don't have an account?
+
+      <a href="learner-register.html">
+        Create Account
+      </a>
+
+    </div>
+
+
+    <div class="security">
+
+      🔐 Your account is protected by Firebase
+      authentication.
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script type="module">
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  signInWithEmailAndPassword
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCRW0JTsN5kQ5De-MgoN8Bd6u2tVvmLF7M",
+
+  authDomain:
+    "mule-learner-tuition-264fe.firebaseapp.com",
+
+  databaseURL:
+    "https://mule-learner-tuition-264fe-default-rtdb.firebaseio.com",
+
+  projectId:
+    "mule-learner-tuition-264fe",
+
+  storageBucket:
+    "mule-learner-tuition-264fe.firebasestorage.app",
+
+  messagingSenderId:
+    "656883565460",
+
+  appId:
+    "1:656883565460:web:3aaa6a5b638a34a6d28581"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+
+const auth =
+  getAuth(app);
+
+
+
+/*
+PHONE NUMBER → FIREBASE EMAIL
+
+Firebase Email/Password authentication
+requires an email identifier.
+
+We create an internal account identifier
+from the learner's phone number.
+
+The learner never needs to see this email.
+*/
+
+function phoneToFirebaseEmail(phone){
+
+  return (
+    "learner_" +
+    phone.replace(/\D/g,"") +
+    "@mulelearner.internal"
+  );
+
+}
+
+
+
+/*
+SHOW / HIDE PASSWORD
+*/
+
+window.togglePassword =
+function(){
+
+  const password =
+    document.getElementById("password");
+
+  const button =
+    document.querySelector(
+      ".show-password"
+    );
+
+
+  if(password.type === "password"){
+
+    password.type = "text";
+
+    button.textContent =
+      "Hide";
+
+  }
+
+  else{
+
+    password.type = "password";
+
+    button.textContent =
+      "Show";
+
+  }
+
+};
+
+
+
+/*
+LOGIN
+*/
+
+window.login =
+async function(){
+
+  const phone =
+    document
+    .getElementById("phone")
+    .value
+    .trim();
+
+
+  const password =
+    document
+    .getElementById("password")
+    .value;
+
+
+  const message =
+    document
+    .getElementById("message");
+
+
+  const button =
+    document
+    .getElementById("loginButton");
+
+
+  if(!phone || !password){
+
+    message.textContent =
+      "Please enter your phone number and password.";
+
+    message.style.color =
+      "#dc2626";
+
+    return;
+
+  }
+
+
+  if(!/^\d{9}$/.test(phone)){
+
+    message.textContent =
+      "Enter a valid Zambian phone number.";
+
+    message.style.color =
+      "#dc2626";
+
+    return;
+
+  }
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Signing in...";
+
+
+  message.textContent =
+    "";
+
+
+  try{
+
+    const email =
+      phoneToFirebaseEmail(phone);
+
+
+    const result =
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    localStorage.setItem(
+      "learnerLoggedIn",
+      "true"
+    );
+
+
+    localStorage.setItem(
+      "learnerUID",
+      result.user.uid
+    );
+
+
+    localStorage.setItem(
+      "studentPhone",
+      phone
+    );
+
+
+    window.location.href =
+      "learner-dashboard.html";
+
+  }
+
+
+  catch(error){
+
+    console.error(error);
+
+
+    let text =
+      "Login failed. Please check your phone number and password.";
+
+
+    if(
+      error.code ===
+      "auth/user-not-found"
+    ){
+
+      text =
+        "No learner account was found with this phone number.";
+
+    }
+
+
+    if(
+      error.code ===
+      "auth/wrong-password"
+    ){
+
+      text =
+        "Incorrect password. Please try again.";
+
+    }
+
+
+    if(
+      error.code ===
+      "auth/invalid-credential"
+    ){
+
+      text =
+        "Incorrect phone number or password.";
+
+    }
+
+
+    message.textContent =
+      text;
+
+    message.style.color =
+      "#dc2626";
+
+
+    button.disabled = false;
+
+    button.textContent =
+      "Login";
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>

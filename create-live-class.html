@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Live Class - Mule Learner Tuition</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    .app {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      background: white;
+      padding: 25px 20px;
+    }
+
+    .header {
+      margin-bottom: 25px;
+    }
+
+    .back {
+      color: #173b8f;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .description {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 6px;
+      margin-bottom: 25px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d8dfeb;
+      border-radius: 11px;
+      font-size: 14px;
+      outline: none;
+      background: white;
+    }
+
+    .button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 11px;
+      background: #173b8f;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #eef5ff;
+      color: #173b8f;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <a href="teacher.html" class="back">← Back to Dashboard</a>
+
+    <h1>Create Live Class</h1>
+
+    <p class="description">
+      Create a live lesson for your learners.
+    </p>
+  </div>
+
+  <div class="field">
+    <label>Class Title</label>
+
+    <input
+      type="text"
+      id="title"
+      placeholder="e.g. Grade 9 Mathematics"
+    >
+  </div>
+
+  <div class="field">
+    <label>Subject</label>
+
+    <select id="subject">
+      <option value="">Select subject</option>
+      <option>Mathematics</option>
+      <option>Computer Studies</option>
+      <option>English</option>
+      <option>Science</option>
+      <option>Chemistry</option>
+      <option>Biology</option>
+      <option>Social Studies</option>
+      <option>Civic Education</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Class Level</label>
+
+    <input
+      type="text"
+      id="level"
+      placeholder="e.g. Grade 9"
+    >
+  </div>
+
+  <div class="field">
+    <label>Date</label>
+
+    <input
+      type="date"
+      id="date"
+    >
+  </div>
+
+  <div class="field">
+    <label>Time</label>
+
+    <input
+      type="time"
+      id="time"
+    >
+  </div>
+
+  <button
+    class="button"
+    onclick="createLiveClass()">
+
+    🎥 Create Live Class
+
+  </button>
+
+  <div id="message" class="message"></div>
+
+</div>
+
+
+<script>
+
+function createLiveClass() {
+
+  const title =
+    document.getElementById("title").value.trim();
+
+  const subject =
+    document.getElementById("subject").value;
+
+  const level =
+    document.getElementById("level").value.trim();
+
+  const date =
+    document.getElementById("date").value;
+
+  const time =
+    document.getElementById("time").value;
+
+
+  if (
+    !title ||
+    !subject ||
+    !level ||
+    !date ||
+    !time
+  ) {
+
+    showMessage(
+      "Please complete all the fields."
+    );
+
+    return;
+  }
+
+
+  const liveClass = {
+
+    title: title,
+
+    subject: subject,
+
+    level: level,
+
+    date: date,
+
+    time: time,
+
+    teacher:
+      localStorage.getItem("teacherName") || "Teacher",
+
+    status: "Scheduled"
+
+  };
+
+
+  localStorage.setItem(
+    "liveClass",
+    JSON.stringify(liveClass)
+  );
+
+
+  alert(
+    "Live class created successfully!"
+  );
+
+
+  window.location.href =
+    "teacher.html";
+
+}
+
+
+function showMessage(text) {
+
+  const message =
+    document.getElementById("message");
+
+  message.textContent = text;
+
+  message.style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>

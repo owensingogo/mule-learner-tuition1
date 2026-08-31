@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+
+  <title>Live Class - Mule Learner Tuition</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111827;
+      color: white;
+    }
+
+    .app {
+      max-width: 600px;
+      min-height: 100vh;
+      margin: auto;
+      background: #111827;
+    }
+
+    header {
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #374151;
+    }
+
+    .brand {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .live {
+      background: #dc2626;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .video {
+      height: 320px;
+      margin: 15px;
+      border-radius: 16px;
+      background: #1f2937;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      transform: scaleX(-1);
+    }
+
+    .camera {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+    }
+
+    .teacher-label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0,0,0,.6);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .status {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 13px;
+      padding: 5px 20px 15px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .control {
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 50%;
+      background: #374151;
+      color: white;
+      font-size: 20px;
+    }
+
+    .off {
+      background: #6b7280;
+    }
+
+    .end {
+      background: #dc2626;
+    }
+
+    .chat {
+      margin: 10px 15px;
+      background: #1f2937;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .chat h3 {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      background: #374151;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .message strong {
+      color: #93c5fd;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .send {
+      border: none;
+      border-radius: 10px;
+      padding: 0 16px;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+
+    <div class="brand">
+      📚 MULE LEARNER
+    </div>
+
+    <div class="live">
+      🔴 LIVE
+    </div>
+
+  </header>
+
+
+  <div class="video">
+
+    <div class="camera" id="cameraIcon">
+      🎥
+    </div>
+
+    <video id="video" autoplay playsinline muted></video>
+
+    <div class="teacher-label">
+      Teacher
+    </div>
+
+  </div>
+
+
+  <div class="status" id="status">
+    Starting camera and microphone...
+  </div>
+
+
+  <div class="controls">
+
+    <button
+      class="control"
+      id="micButton"
+      onclick="toggleMic()">
+      🎙️
+    </button>
+
+    <button
+      class="control"
+      id="cameraButton"
+      onclick="toggleCamera()">
+      📹
+    </button>
+
+    <button
+      class="control end"
+      onclick="endClass()">
+      ☎️
+    </button>
+
+  </div>
+
+
+  <div class="chat">
+
+    <h3>
+      💬 Class Chat
+    </h3>
+
+    <div id="messages">
+
+      <div class="message">
+        <strong>System:</strong>
+        Welcome to the live class.
+      </div>
+
+    </div>
+
+    <div class="input-area">
+
+      <input
+        type="text"
+        id="message"
+        placeholder="Ask your teacher..."
+      >
+
+      <button
+        class="send"
+        onclick="sendMessage()">
+        Send
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+let stream = null;
+let micOn = true;
+let cameraOn = true;
+
+
+async function startMedia() {
+
+  const status =
+    document.getElementById("status");
+
+  const video =
+    document.getElementById("video");
+
+  const cameraIcon =
+    document.getElementById("cameraIcon");
+
+
+  try {
+
+    stream =
+      await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      });
+
+
+    video.srcObject = stream;
+
+    video.style.display = "block";
+
+    cameraIcon.style.display = "none";
+
+    status.textContent =
+      "Camera and microphone are ready.";
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.textContent =
+      "Camera/microphone permission was not granted.";
+
+    alert(
+      "Please allow camera and microphone permission to start the live class."
+    );
+
+  }
+
+}
+
+
+function toggleMic() {
+
+  if (!stream) return;
+
+  const audioTracks =
+    stream.getAudioTracks();
+
+  if (!audioTracks.length) return;
+
+  micOn = !micOn;
+
+  audioTracks[0].enabled = micOn;
+
+  const button =
+    document.getElementById("micButton");
+
+  button.textContent =
+    micOn ? "🎙️" : "🔇";
+
+  button.classList.toggle(
+    "off",
+    !micOn
+  );
+
+}
+
+
+function toggleCamera() {
+
+  if (!stream) return;
+
+  const videoTracks =
+    stream.getVideoTracks();
+
+  if (!videoTracks.length) return;
+
+  cameraOn = !cameraOn;
+
+  videoTracks[0].enabled = cameraOn;
+
+  const button =
+    document.getElementById("cameraButton");
+
+  const video =
+    document.getElementById("video");
+
+  const cameraIcon =
+    document.getElementById("cameraIcon");
+
+  button.textContent =
+    cameraOn ? "📹" : "🚫";
+
+  button.classList.toggle(
+    "off",
+    !cameraOn
+  );
+
+  if (cameraOn) {
+
+    video.style.display = "block";
+
+    cameraIcon.style.display = "none";
+
+  } else {
+
+    video.style.display = "none";
+
+    cameraIcon.style.display = "flex";
+
+  }
+
+}
+
+
+function sendMessage() {
+
+  const input =
+    document.getElementById("message");
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+
+  const messages =
+    document.getElementById("messages");
+
+  const message =
+    document.createElement("div");
+
+  message.className = "message";
+
+  const strong =
+    document.createElement("strong");
+
+  strong.textContent = "You: ";
+
+  message.appendChild(strong);
+
+  message.appendChild(
+    document.createTextNode(text)
+  );
+
+  messages.appendChild(message);
+
+  input.value = "";
+
+}
+
+
+function endClass() {
+
+  if (
+    confirm("Leave this live class?")
+  ) {
+
+    if (stream) {
+
+      stream.getTracks().forEach(
+        track => track.stop()
+      );
+
+    }
+
+    window.location.href =
+      "teacher.html";
+
+  }
+
+}
+
+
+startMedia();
+
+</script>
+
+</body>
+</html>

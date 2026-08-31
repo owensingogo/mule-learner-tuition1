@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102d70">
+
+<title>Create Account | Mule Learner Tuition</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f4f7fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    color:#172033;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+}
+
+.logo{
+    width:64px;
+    height:64px;
+    margin:0 auto 14px;
+    border-radius:18px;
+    background:#2563eb;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:31px;
+    box-shadow:0 8px 20px rgba(37,99,235,.2);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    font-size:23px;
+    color:#102d70;
+}
+
+.header p{
+    color:#7a8495;
+    font-size:12px;
+    margin-top:6px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e2e7ef;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 10px 30px rgba(15,23,42,.06);
+}
+
+.card h2{
+    font-size:19px;
+    margin-bottom:6px;
+}
+
+.subtitle{
+    color:#7a8495;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:13px;
+    border:1px solid #d9e0eb;
+    border-radius:9px;
+    outline:none;
+    font-size:12px;
+    background:white;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#2563eb;
+}
+
+.button{
+    width:100%;
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+    font-size:12px;
+    cursor:pointer;
+}
+
+.button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+    margin-bottom:15px;
+    padding:12px;
+    border-radius:9px;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.message.show{
+    display:block;
+}
+
+.error{
+    background:#fef2f2;
+    color:#b91c1c;
+}
+
+.success{
+    background:#f0fdf4;
+    color:#15803d;
+}
+
+#recaptcha-container{
+    margin:10px 0;
+}
+
+.otp-section{
+    display:none;
+}
+
+.otp-section.show{
+    display:block;
+}
+
+.login{
+    text-align:center;
+    margin-top:18px;
+    font-size:11px;
+    color:#7a8495;
+}
+
+.login a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    margin-top:16px;
+    color:#9aa3b2;
+    font-size:9px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        📚
+    </div>
+
+    <div class="header">
+        <h1>Mule Learner Tuition</h1>
+        <p>Learn • Practice • Succeed</p>
+    </div>
+
+    <div class="card">
+
+        <h2>Create Learner Account</h2>
+
+        <p class="subtitle">
+            Register with your phone number and enjoy your first
+            <strong>24 hours FREE</strong>.
+        </p>
+
+        <div id="message" class="message"></div>
+
+        <!-- REGISTRATION FORM -->
+
+        <form id="registerForm">
+
+            <div class="field">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    id="phone"
+                    type="tel"
+                    placeholder="0971234567"
+                    autocomplete="tel"
+                    maxlength="13"
+                    required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="grade">
+                    Grade / Class
+                </label>
+
+                <select
+                    id="grade"
+                    required>
+
+                    <option value="">
+                        Select your grade
+                    </option>
+
+                    <option value="Grade 1">
+                        Grade 1
+                    </option>
+
+                    <option value="Grade 2">
+                        Grade 2
+                    </option>
+
+                    <option value="Grade 3">
+                        Grade 3
+                    </option>
+
+                    <option value="Grade 4">
+                        Grade 4
+                    </option>
+
+                    <option value="Grade 5">
+                        Grade 5
+                    </option>
+
+                    <option value="Grade 6">
+                        Grade 6
+                    </option>
+
+                    <option value="Grade 7">
+                        Grade 7
+                    </option>
+
+                    <option value="Grade 8">
+                        Grade 8
+                    </option>
+
+                    <option value="Grade 9">
+                        Grade 9
+                    </option>
+
+                    <option value="Grade 10">
+                        Grade 10
+                    </option>
+
+                    <option value="Grade 11">
+                        Grade 11
+                    </option>
+
+                    <option value="Grade 12">
+                        Grade 12
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- FIREBASE RECAPTCHA -->
+
+            <div id="recaptcha-container"></div>
+
+
+            <button
+                id="sendCode"
+                class="button"
+                type="submit">
+
+                Create Account & Start Free Trial
+
+            </button>
+
+        </form>
+
+
+        <!-- OTP VERIFICATION -->
+
+        <div
+            id="otpSection"
+            class="otp-section">
+
+            <div
+                class="field"
+                style="margin-top:18px;">
+
+                <label for="otp">
+                    Verification Code
+                </label>
+
+                <input
+                    id="otp"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="6"
+                    placeholder="Enter 6-digit code"
+                    autocomplete="one-time-code">
+
+            </div>
+
+
+            <button
+                id="verifyCode"
+                class="button"
+                type="button">
+
+                Verify & Start Free Trial
+
+            </button>
+
+        </div>
+
+
+        <div class="login">
+
+            Already have an account?
+
+            <a href="./index.html">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        © 2026 Mule Learner Tuition
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    app,
+    auth,
+    RecaptchaVerifier,
+    signInWithPhoneNumber
+} from "./firebase.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* FIRESTORE */
+
+const db =
+    getFirestore(app);
+
+
+/* ELEMENTS */
+
+const form =
+    document.getElementById(
+        "registerForm"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+const otpSection =
+    document.getElementById(
+        "otpSection"
+    );
+
+const sendCode =
+    document.getElementById(
+        "sendCode"
+    );
+
+const verifyCode =
+    document.getElementById(
+        "verifyCode"
+    );
+
+
+/* CONFIRMATION */
+
+let confirmationResult =
+    null;
+
+
+/* SHOW MESSAGE */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message show " +
+        type;
+
+}
+
+
+/* FORMAT ZAMBIAN PHONE */
+
+function formatZambianPhone(
+    phone
+){
+
+    phone =
+        phone
+        .replace(/\s+/g,"")
+        .replace(/-/g,"");
+
+
+    if(
+        phone.startsWith("0")
+    ){
+
+        return (
+            "+260" +
+            phone.substring(1)
+        );
+
+    }
+
+
+    if(
+        phone.startsWith("260")
+    ){
+
+        return "+" +
+            phone;
+
+    }
+
+
+    return phone;
+
+}
+
+
+/* RECAPTCHA */
+
+let recaptchaVerifier =
+    null;
+
+
+try{
+
+    recaptchaVerifier =
+        new RecaptchaVerifier(
+            auth,
+            "recaptcha-container",
+            {
+                size:"normal"
+            }
+        );
+
+}catch(error){
+
+    console.error(
+        "reCAPTCHA error:",
+        error
+    );
+
+}
+
+
+/* SEND PHONE CODE */
+
+form.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const name =
+            document
+            .getElementById("name")
+            .value
+            .trim();
+
+
+        const phone =
+            document
+            .getElementById("phone")
+            .value
+            .trim();
+
+
+        const grade =
+            document
+            .getElementById("grade")
+            .value;
+
+
+        /* VALIDATION */
+
+        if(
+            !name ||
+            !phone ||
+            !grade
+        ){
+
+            showMessage(
+                "Please complete all the required fields.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const formattedPhone =
+            formatZambianPhone(
+                phone
+            );
+
+
+        if(
+            !formattedPhone.startsWith("+260")
+        ){
+
+            showMessage(
+                "Please enter a valid Zambian phone number.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        sendCode.disabled =
+            true;
+
+        sendCode.textContent =
+            "Sending verification code...";
+
+
+        try{
+
+            confirmationResult =
+                await signInWithPhoneNumber(
+                    auth,
+                    formattedPhone,
+                    recaptchaVerifier
+                );
+
+
+            otpSection
+                .classList
+                .add("show");
+
+
+            showMessage(
+                "Verification code sent to " +
+                formattedPhone +
+                ". Enter the code below.",
+                "success"
+            );
+
+
+            sendCode.style.display =
+                "none";
+
+
+        }catch(error){
+
+            console.error(
+                "Phone verification error:",
+                error
+            );
+
+
+            sendCode.disabled =
+                false;
+
+            sendCode.textContent =
+                "Create Account & Start Free Trial";
+
+
+            showMessage(
+                "We could not send the verification code. Please check your phone number and try again.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+/* VERIFY CODE AND CREATE ACCOUNT */
+
+verifyCode.addEventListener(
+    "click",
+    async function(){
+
+        const code =
+            document
+            .getElementById("otp")
+            .value
+            .trim();
+
+
+        const name =
+            document
+            .getElementById("name")
+            .value
+            .trim();
+
+
+        const phone =
+            document
+            .getElementById("phone")
+            .value
+            .trim();
+
+
+        const grade =
+            document
+            .getElementById("grade")
+            .value;
+
+
+        if(
+            !confirmationResult
+        ){
+
+            showMessage(
+                "Please request a verification code first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(
+            code.length !== 6
+        ){
+
+            showMessage(
+                "Please enter the 6-digit verification code.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        verifyCode.disabled =
+            true;
+
+        verifyCode.textContent =
+            "Creating account...";
+
+
+        try{
+
+            /*
+             * CONFIRM PHONE
+             */
+
+            const result =
+                await confirmationResult.confirm(
+                    code
+                );
+
+
+            const user =
+                result.user;
+
+
+            /*
+             * START 24-HOUR FREE TRIAL
+             */
+
+            const trialStartedAt =
+                new Date();
+
+
+            const trialEndsAt =
+                new Date(
+                    trialStartedAt.getTime()
+                    +
+                    (24 * 60 * 60 * 1000)
+                );
+
+
+            /*
+             * SAVE LEARNER
+             */
+
+            await setDoc(
+                doc(
+                    db,
+                    "learners",
+                    user.uid
+                ),
+                {
+
+                    uid:
+                        user.uid,
+
+                    name:
+                        name,
+
+                    phone:
+                        phone,
+
+                    grade:
+                        grade,
+
+                    accessStatus:
+                        "trial",
+
+                    paymentStatus:
+                        "unpaid",
+
+                    trialStartedAt:
+                        trialStartedAt,
+
+                    trialEndsAt:
+                        trialEndsAt,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            /*
+             * SUCCESS
+             */
+
+            showMessage(
+                "Account created successfully! Your 24-hour free trial has started.",
+                "success"
+            );
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "./learner-dashboard.html";
+
+                },
+                1500
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "Account creation error:",
+                error
+            );
+
+
+            verifyCode.disabled =
+                false;
+
+            verifyCode.textContent =
+                "Verify & Start Free Trial";
+
+
+            showMessage(
+                "Verification failed. Please check the code and try again.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

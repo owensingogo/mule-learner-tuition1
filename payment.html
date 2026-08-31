@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173b8f">
+
+<title>Payment | Mule Learner Tuition</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+}
+
+.app{
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:white;
+}
+
+
+/* HEADER */
+
+.header{
+  background:#173b8f;
+  color:white;
+  padding:18px 20px;
+  border-radius:0 0 20px 20px;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+}
+
+.brand h1{
+  font-size:15px;
+}
+
+.brand p{
+  margin-top:3px;
+  font-size:10px;
+  opacity:.8;
+}
+
+.back{
+  color:white;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.35);
+  padding:8px 10px;
+  border-radius:9px;
+  font-size:11px;
+}
+
+
+/* MAIN */
+
+.main{
+  padding:20px;
+}
+
+.title h2{
+  font-size:23px;
+}
+
+.title p{
+  margin-top:7px;
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.5;
+}
+
+
+/* LEARNER */
+
+.account{
+  margin-top:18px;
+  padding:14px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  font-size:12px;
+}
+
+.account span{
+  color:#8a94a6;
+}
+
+.account strong{
+  display:block;
+  margin-top:4px;
+}
+
+
+/* SECTION */
+
+.section{
+  margin-top:22px;
+}
+
+.section h3{
+  font-size:17px;
+}
+
+.section p{
+  margin-top:5px;
+  color:#6b7280;
+  font-size:12px;
+}
+
+
+/* PLANS */
+
+.plans{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.plan{
+  border:1px solid #dce3ed;
+  border-radius:14px;
+  padding:15px;
+  background:white;
+  cursor:pointer;
+}
+
+.plan.selected{
+  border:2px solid #2563eb;
+  background:#eff6ff;
+}
+
+.plan h4{
+  font-size:14px;
+  color:#173b8f;
+}
+
+.price{
+  margin-top:7px;
+  font-size:23px;
+  font-weight:bold;
+}
+
+.plan p{
+  margin-top:4px;
+  color:#6b7280;
+  font-size:10px;
+}
+
+
+/* PAYMENT METHODS */
+
+.method{
+  margin-top:10px;
+  padding:15px;
+  border:1px solid #dce3ed;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.method.selected{
+  border:2px solid #2563eb;
+  background:#eff6ff;
+}
+
+.method strong{
+  font-size:13px;
+}
+
+.number{
+  margin-top:7px;
+  font-size:17px;
+  font-weight:bold;
+  letter-spacing:.4px;
+}
+
+.account-name{
+  margin-top:4px;
+  color:#6b7280;
+  font-size:10px;
+}
+
+
+/* PAYMENT SUMMARY */
+
+.summary{
+  margin-top:20px;
+  padding:17px;
+  border-radius:14px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+}
+
+.summary h3{
+  font-size:15px;
+}
+
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #e5e7eb;
+  font-size:12px;
+}
+
+.summary-row:last-child{
+  border-bottom:0;
+}
+
+.summary-row span{
+  color:#6b7280;
+}
+
+.summary-row strong{
+  text-align:right;
+}
+
+
+/* BUTTON */
+
+.button{
+  width:100%;
+  padding:15px;
+  margin-top:18px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.button:disabled{
+  opacity:.65;
+}
+
+
+/* MESSAGE */
+
+.message{
+  margin-top:13px;
+  text-align:center;
+  font-size:12px;
+  line-height:1.5;
+}
+
+
+/* NOTICE */
+
+.notice{
+  margin-top:18px;
+  padding:14px;
+  border-radius:11px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  font-size:11px;
+  line-height:1.6;
+}
+
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  padding:28px 20px;
+  color:#8a94a6;
+  font-size:10px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:420px){
+
+  .plans{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="header-top">
+
+    <div class="brand">
+
+      <div class="logo">
+        📚
+      </div>
+
+      <div>
+
+        <h1>
+          MULE LEARNER TUITION
+        </h1>
+
+        <p>
+          Learn • Practice • Succeed
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <a
+      href="learner-dashboard.html"
+      class="back">
+
+      ← Back
+
+    </a>
+
+  </div>
+
+</header>
+
+
+
+<main class="main">
+
+
+<!-- TITLE -->
+
+<div class="title">
+
+  <h2>
+    Learning Payment
+  </h2>
+
+  <p>
+    Choose your learning plan and payment
+    method to activate your learning access.
+  </p>
+
+</div>
+
+
+
+<!-- LEARNER -->
+
+<div class="account">
+
+  <span>
+    Learner
+  </span>
+
+  <strong id="learnerName">
+    —
+  </strong>
+
+
+  <span
+    style="display:block;margin-top:9px;">
+
+    Phone
+
+  </span>
+
+  <strong id="learnerPhone">
+    —
+  </strong>
+
+</div>
+
+
+
+<!-- PLANS -->
+
+<div class="section">
+
+  <h3>
+    Choose Learning Plan
+  </h3>
+
+  <p>
+    Select one plan.
+  </p>
+
+
+  <div class="plans">
+
+
+    <div
+      class="plan"
+      data-plan="6 Hours"
+      data-price="5"
+      onclick="selectPlan(this)">
+
+      <h4>
+        6 Hours
+      </h4>
+
+      <div class="price">
+        K5
+      </div>
+
+      <p>
+        Learning access for 6 hours
+      </p>
+
+    </div>
+
+
+
+    <div
+      class="plan"
+      data-plan="Daily"
+      data-price="10"
+      onclick="selectPlan(this)">
+
+      <h4>
+        Daily
+      </h4>
+
+      <div class="price">
+        K10
+      </div>
+
+      <p>
+        Learning access for 1 day
+      </p>
+
+    </div>
+
+
+
+    <div
+      class="plan"
+      data-plan="Weekly"
+      data-price="45"
+      onclick="selectPlan(this)">
+
+      <h4>
+        Weekly
+      </h4>
+
+      <div class="price">
+        K45
+      </div>
+
+      <p>
+        Learning access for 7 days
+      </p>
+
+    </div>
+
+
+
+    <div
+      class="plan"
+      data-plan="Monthly"
+      data-price="180"
+      onclick="selectPlan(this)">
+
+      <h4>
+        Monthly
+      </h4>
+
+      <div class="price">
+        K180
+      </div>
+
+      <p>
+        Learning access for 30 days
+      </p>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- METHODS -->
+
+<div class="section">
+
+  <h3>
+    Choose Payment Method
+  </h3>
+
+  <p>
+    Select where you will send your payment.
+  </p>
+
+
+
+  <div
+    class="method"
+    data-method="Airtel Money"
+    data-number="0978362800"
+    onclick="selectMethod(this)">
+
+    <strong>
+      🔴 Airtel Money
+    </strong>
+
+    <div class="number">
+      0978362800
+    </div>
+
+    <div class="account-name">
+      Account Name: <strong>SINGOGO OWEN</strong>
+    </div>
+
+  </div>
+
+
+
+  <div
+    class="method"
+    data-method="MTN Money"
+    data-number="0768217115"
+    onclick="selectMethod(this)">
+
+    <strong>
+      🟡 MTN Money
+    </strong>
+
+    <div class="number">
+      0768217115
+    </div>
+
+    <div class="account-name">
+      Account Name: <strong>SINGOGO OWEN</strong>
+    </div>
+
+  </div>
+
+
+
+  <div
+    class="method"
+    data-method="Zamtel Money"
+    data-number="0750840210"
+    onclick="selectMethod(this)">
+
+    <strong>
+      🟢 Zamtel Money
+    </strong>
+
+    <div class="number">
+      0750840210
+    </div>
+
+    <div class="account-name">
+      Account Name: <strong>SINGOGO OWEN</strong>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- SUMMARY -->
+
+<div class="summary">
+
+  <h3>
+    Payment Summary
+  </h3>
+
+
+  <div class="summary-row">
+
+    <span>
+      Learning Plan
+    </span>
+
+    <strong id="summaryPlan">
+      Not selected
+    </strong>
+
+  </div>
+
+
+  <div class="summary-row">
+
+    <span>
+      Amount
+    </span>
+
+    <strong id="summaryAmount">
+      K0
+    </strong>
+
+  </div>
+
+
+  <div class="summary-row">
+
+    <span>
+      Payment Method
+    </span>
+
+    <strong id="summaryMethod">
+      Not selected
+    </strong>
+
+  </div>
+
+
+  <div class="summary-row">
+
+    <span>
+      Payment Number
+    </span>
+
+    <strong id="summaryNumber">
+      —
+    </strong>
+
+  </div>
+
+</div>
+
+
+
+<!-- PAID BUTTON -->
+
+<button
+  id="paidButton"
+  class="button"
+  onclick="confirmPayment()">
+
+  I Have Paid
+
+</button>
+
+
+<div
+  id="message"
+  class="message">
+</div>
+
+
+
+<!-- NOTICE -->
+
+<div class="notice">
+
+  ⚠️ After making your payment, press
+  <strong>“I Have Paid”</strong>.
+
+  <br><br>
+
+  Your payment will be sent to administration
+  for manual verification. Your learning access
+  will only be activated after your payment has
+  been confirmed.
+
+  <br><br>
+
+  <strong>Account Name: SINGOGO OWEN</strong>
+
+</div>
+
+
+</main>
+
+
+
+<footer class="footer">
+
+  © 2026 Mule Learner Tuition.
+  All rights reserved.
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+
+/* LEARNER */
+
+const learnerName =
+  localStorage.getItem("studentName")
+  || "Learner";
+
+
+const learnerPhone =
+  localStorage.getItem("studentPhone")
+  || "—";
+
+
+const learnerUID =
+  localStorage.getItem("learnerUID")
+  || "unknown";
+
+
+document
+  .getElementById("learnerName")
+  .textContent =
+  learnerName;
+
+
+document
+  .getElementById("learnerPhone")
+  .textContent =
+  learnerPhone;
+
+
+
+/* SELECTED PLAN */
+
+let selectedPlan = "";
+
+let selectedAmount = 0;
+
+
+
+function selectPlan(element){
+
+  document
+    .querySelectorAll(".plan")
+    .forEach(function(item){
+
+      item.classList.remove("selected");
+
+    });
+
+
+  element.classList.add("selected");
+
+
+  selectedPlan =
+    element.dataset.plan;
+
+
+  selectedAmount =
+    Number(element.dataset.price);
+
+
+  document
+    .getElementById("summaryPlan")
+    .textContent =
+    selectedPlan;
+
+
+  document
+    .getElementById("summaryAmount")
+    .textContent =
+    "K" + selectedAmount;
+
+}
+
+
+
+/* SELECTED METHOD */
+
+let selectedMethod = "";
+
+let selectedNumber = "";
+
+
+
+function selectMethod(element){
+
+  document
+    .querySelectorAll(".method")
+    .forEach(function(item){
+
+      item.classList.remove("selected");
+
+    });
+
+
+  element.classList.add("selected");
+
+
+  selectedMethod =
+    element.dataset.method;
+
+
+  selectedNumber =
+    element.dataset.number;
+
+
+  document
+    .getElementById("summaryMethod")
+    .textContent =
+    selectedMethod;
+
+
+  document
+    .getElementById("summaryNumber")
+    .textContent =
+    selectedNumber;
+
+}
+
+
+
+/* CONFIRM PAYMENT */
+
+function confirmPayment(){
+
+  const message =
+    document.getElementById("message");
+
+
+  const button =
+    document.getElementById("paidButton");
+
+
+
+  if(!selectedPlan){
+
+    message.textContent =
+      "Please select a learning plan.";
+
+    message.style.color =
+      "#dc2626";
+
+    return;
+
+  }
+
+
+
+  if(!selectedMethod){
+
+    message.textContent =
+      "Please select a payment method.";
+
+    message.style.color =
+      "#dc2626";
+
+    return;
+
+  }
+
+
+
+  /*
+  Store a pending payment request.
+
+  This is temporary until Firebase
+  administration is connected.
+  */
+
+  const paymentRequest = {
+
+    uid: learnerUID,
+
+    learnerName: learnerName,
+
+    phone: learnerPhone,
+
+    plan: selectedPlan,
+
+    amount: selectedAmount,
+
+    paymentMethod: selectedMethod,
+
+    paymentNumber: selectedNumber,
+
+    accountName: "SINGOGO OWEN",
+
+    status: "pending",
+
+    submittedAt: Date.now()
+
+  };
+
+
+  localStorage.setItem(
+    "paymentRequest",
+    JSON.stringify(paymentRequest)
+  );
+
+
+  localStorage.setItem(
+    "paymentStatus",
+    "pending"
+  );
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Payment Submitted";
+
+
+  message.textContent =
+    "Your payment has been submitted for verification. Please wait for administration to confirm your access.";
+
+  message.style.color =
+    "#166534";
+
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Class - Mule Learner Tuition</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #111827;
+      color: white;
+    }
+
+    .app {
+      max-width: 600px;
+      min-height: 100vh;
+      margin: auto;
+    }
+
+    header {
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #374151;
+    }
+
+    .live {
+      background: #dc2626;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+    }
+
+    .video {
+      height: 320px;
+      margin: 15px;
+      border-radius: 16px;
+      background: #1f2937;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+
+    .camera-icon {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+
+    .teacher-label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: #0009;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .status {
+      text-align: center;
+      color: #9ca3af;
+      padding: 10px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 15px;
+    }
+
+    .control {
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 50%;
+      background: #374151;
+      color: white;
+      font-size: 20px;
+    }
+
+    .end {
+      background: #dc2626;
+    }
+
+    .requests {
+      margin: 15px;
+      background: #1f2937;
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .requests h3 {
+      margin-top: 0;
+    }
+
+    .request {
+      background: #374151;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .request-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .approve,
+    .reject {
+      padding: 9px 14px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .approve {
+      background: #16a34a;
+    }
+
+    .reject {
+      background: #dc2626;
+    }
+
+    .empty {
+      color: #9ca3af;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <strong>📚 MULE LEARNER</strong>
+    <span class="live">🔴 LIVE</span>
+  </header>
+
+  <div class="video">
+
+    <video
+      id="video"
+      autoplay
+      playsinline
+      muted>
+    </video>
+
+    <div
+      id="cameraIcon"
+      class="camera-icon">
+      🎥
+    </div>
+
+    <div class="teacher-label">
+      Teacher
+    </div>
+
+  </div>
+
+  <div
+    id="status"
+    class="status">
+    Starting camera...
+  </div>
+
+  <div class="controls">
+
+    <button
+      id="micButton"
+      class="control"
+      onclick="toggleMic()">
+      🎙️
+    </button>
+
+    <button
+      id="cameraButton"
+      class="control"
+      onclick="toggleCamera()">
+      📹
+    </button>
+
+    <button
+      class="control end"
+      onclick="endClass()">
+      ☎️
+    </button>
+
+  </div>
+
+  <div class="requests">
+
+    <h3>👥 Join Requests</h3>
+
+    <div id="requestsList">
+      <div class="empty">
+        No learners are waiting.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  update
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCRW0JTsN5kQ5De-MgoN8Bd6u2tVvmLF7M",
+
+  authDomain:
+    "mule-learner-tuition-264fe.firebaseapp.com",
+
+  databaseURL:
+    "https://mule-learner-tuition-264fe-default-rtdb.firebaseio.com",
+
+  projectId:
+    "mule-learner-tuition-264fe",
+
+  storageBucket:
+    "mule-learner-tuition-264fe.firebasestorage.app",
+
+  messagingSenderId:
+    "656883565460",
+
+  appId:
+    "1:656883565460:web:3aaa6a5b638a34a6d28581"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getDatabase(app);
+
+
+let stream = null;
+let micOn = true;
+let cameraOn = true;
+
+
+/*
+  One active teacher class.
+  No Classroom ID is shown to the teacher or learner.
+*/
+
+const liveClassRef =
+  ref(db, "liveClass");
+
+
+async function startClass() {
+
+  try {
+
+    stream =
+      await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      });
+
+    const video =
+      document.getElementById("video");
+
+    video.srcObject = stream;
+
+    document.getElementById(
+      "cameraIcon"
+    ).style.display = "none";
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Live class is ready. Waiting for learners...";
+
+
+    await set(liveClassRef, {
+
+      status: "live",
+
+      teacher:
+        localStorage.getItem("teacherName")
+        || "Teacher",
+
+      startedAt:
+        Date.now()
+
+    });
+
+
+    watchRequests();
+
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Camera could not be started.";
+
+  }
+
+}
+
+
+/*
+  Watch learner requests.
+*/
+
+function watchRequests() {
+
+  const requestsRef =
+    ref(db, "liveClass/requests");
+
+  onValue(
+    requestsRef,
+    snapshot => {
+
+      const data =
+        snapshot.val() || {};
+
+      const list =
+        document.getElementById(
+          "requestsList"
+        );
+
+      list.innerHTML = "";
+
+      const requests =
+        Object.entries(data)
+          .filter(
+            ([id, request]) =>
+              request &&
+              request.status === "waiting"
+          );
+
+
+      if (!requests.length) {
+
+        list.innerHTML =
+          '<div class="empty">' +
+          'No learners are waiting.' +
+          '</div>';
+
+        return;
+
+      }
+
+
+      requests.forEach(
+        ([id, request]) => {
+
+          const box =
+            document.createElement("div");
+
+          box.className =
+            "request";
+
+
+          box.innerHTML = `
+
+            <strong>
+              👤 ${request.name || "Learner"}
+            </strong>
+
+            <div class="request-buttons">
+
+              <button
+                class="approve"
+                onclick="approveLearner('${id}')">
+                ✅ Approve
+              </button>
+
+              <button
+                class="reject"
+                onclick="rejectLearner('${id}')">
+                ❌ Reject
+              </button>
+
+            </div>
+
+          `;
+
+
+          list.appendChild(box);
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+window.approveLearner =
+  async function(id) {
+
+    await update(
+      ref(db, "liveClass/requests/" + id),
+      {
+        status: "approved"
+      }
+    );
+
+  };
+
+
+window.rejectLearner =
+  async function(id) {
+
+    await update(
+      ref(db, "liveClass/requests/" + id),
+      {
+        status: "rejected"
+      }
+    );
+
+  };
+
+
+window.toggleMic =
+  function() {
+
+    if (!stream) return;
+
+    const track =
+      stream.getAudioTracks()[0];
+
+    if (!track) return;
+
+    micOn = !micOn;
+
+    track.enabled = micOn;
+
+    document.getElementById(
+      "micButton"
+    ).textContent =
+      micOn ? "🎙️" : "🔇";
+
+  };
+
+
+window.toggleCamera =
+  function() {
+
+    if (!stream) return;
+
+    const track =
+      stream.getVideoTracks()[0];
+
+    if (!track) return;
+
+    cameraOn = !cameraOn;
+
+    track.enabled = cameraOn;
+
+    document.getElementById(
+      "cameraButton"
+    ).textContent =
+      cameraOn ? "📹" : "🚫";
+
+  };
+
+
+window.endClass =
+  async function() {
+
+    if (
+      !confirm("End this live class?")
+    ) {
+      return;
+    }
+
+
+    if (stream) {
+
+      stream
+        .getTracks()
+        .forEach(
+          track => track.stop()
+        );
+
+    }
+
+
+    await set(
+      liveClassRef,
+      {
+        status: "ended"
+      }
+    );
+
+
+    window.location.href =
+      "teacher.html";
+
+  };
+
+
+startClass();
+
+</script>
+
+</body>
+  </html>

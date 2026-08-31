@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173b8f">
+
+<title>Learner Dashboard | Mule Learner Tuition</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+}
+
+.app{
+  max-width:1100px;
+  min-height:100vh;
+  margin:auto;
+  background:#f4f7fb;
+}
+
+/* HEADER */
+
+.header{
+  background:#173b8f;
+  color:white;
+  padding:20px;
+  border-radius:0 0 22px 22px;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.brand h1{
+  font-size:18px;
+}
+
+.brand p{
+  margin-top:3px;
+  font-size:11px;
+  opacity:.8;
+}
+
+.logout{
+  border:1px solid rgba(255,255,255,.35);
+  background:transparent;
+  color:white;
+  border-radius:9px;
+  padding:9px 12px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.welcome{
+  margin-top:25px;
+}
+
+.welcome h2{
+  font-size:24px;
+}
+
+.welcome p{
+  margin-top:7px;
+  font-size:13px;
+  opacity:.8;
+}
+
+/* MAIN */
+
+.main{
+  padding:20px;
+}
+
+.access-card{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:17px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.access-title{
+  font-size:14px;
+  font-weight:bold;
+}
+
+.access-text{
+  margin-top:5px;
+  color:#6b7280;
+  font-size:12px;
+}
+
+.access-badge{
+  padding:8px 12px;
+  border-radius:20px;
+  background:#fef3c7;
+  color:#92400e;
+  font-size:11px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.access-badge.active{
+  background:#dcfce7;
+  color:#166534;
+}
+
+/* QUICK MENU */
+
+.section-title{
+  margin-top:25px;
+  margin-bottom:13px;
+}
+
+.section-title h3{
+  font-size:18px;
+}
+
+.section-title p{
+  margin-top:4px;
+  color:#6b7280;
+  font-size:12px;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.menu-card{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:15px;
+  padding:18px 12px;
+  text-decoration:none;
+  color:#172033;
+  transition:.2s;
+}
+
+.menu-card:hover{
+  transform:translateY(-2px);
+  border-color:#2563eb;
+}
+
+.menu-icon{
+  font-size:28px;
+}
+
+.menu-card h4{
+  margin-top:10px;
+  font-size:14px;
+}
+
+.menu-card p{
+  margin-top:4px;
+  color:#6b7280;
+  font-size:11px;
+  line-height:1.4;
+}
+
+/* SUBJECTS */
+
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.subject{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:15px;
+  padding:17px;
+  text-decoration:none;
+  color:#172033;
+}
+
+.subject:hover{
+  border-color:#2563eb;
+}
+
+.subject-icon{
+  font-size:25px;
+}
+
+.subject h4{
+  margin-top:10px;
+  font-size:14px;
+}
+
+.subject p{
+  margin-top:5px;
+  color:#6b7280;
+  font-size:11px;
+}
+
+.subject-action{
+  display:inline-block;
+  margin-top:12px;
+  color:#2563eb;
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* PAYMENT */
+
+.payment{
+  margin-top:25px;
+  background:#fff;
+  border:1px solid #dbe4f0;
+  border-radius:17px;
+  padding:20px;
+}
+
+.payment h3{
+  font-size:17px;
+}
+
+.payment p{
+  margin-top:7px;
+  color:#6b7280;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.payment-button{
+  display:inline-block;
+  margin-top:14px;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+  padding:12px 17px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  padding:30px 20px;
+  color:#8a94a6;
+  font-size:11px;
+}
+
+@media(max-width:700px){
+
+  .menu{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .subjects{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:450px){
+
+  .main{
+    padding:15px;
+  }
+
+  .subjects{
+    grid-template-columns:1fr;
+  }
+
+  .access-card{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="header">
+
+    <div class="header-top">
+
+      <div class="brand">
+
+        <div class="logo-icon">
+          📚
+        </div>
+
+        <div>
+          <h1>MULE LEARNER TUITION</h1>
+          <p>Learn • Practice • Succeed</p>
+        </div>
+
+      </div>
+
+      <button
+        class="logout"
+        onclick="logout()">
+
+        Log Out
+
+      </button>
+
+    </div>
+
+    <div class="welcome">
+
+      <h2 id="welcomeName">
+        Welcome, Learner! 👋
+      </h2>
+
+      <p>
+        Continue your learning and improve your results.
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <main class="main">
+
+
+    <!-- ACCESS STATUS -->
+
+    <div class="access-card">
+
+      <div>
+
+        <div class="access-title">
+          Learning Access
+        </div>
+
+        <div
+          id="accessText"
+          class="access-text">
+
+          Your learning access is currently locked.
+          Make a payment to start learning.
+
+        </div>
+
+      </div>
+
+      <div
+        id="accessBadge"
+        class="access-badge">
+
+        PAYMENT REQUIRED
+
+      </div>
+
+    </div>
+
+
+    <!-- QUICK MENU -->
+
+    <div class="section-title">
+
+      <h3>
+        Learning Centre
+      </h3>
+
+      <p>
+        Everything you need for your studies.
+      </p>
+
+    </div>
+
+
+    <div class="menu">
+
+
+      <a
+        class="menu-card"
+        href="subjects.html">
+
+        <div class="menu-icon">
+          📚
+        </div>
+
+        <h4>
+          Subjects
+        </h4>
+
+        <p>
+          Explore all secondary subjects.
+        </p>
+
+      </a>
+
+
+      <a
+        class="menu-card"
+        href="lessons.html">
+
+        <div class="menu-icon">
+          📝
+        </div>
+
+        <h4>
+          Lessons
+        </h4>
+
+        <p>
+          Study lessons and learning materials.
+        </p>
+
+      </a>
+
+
+      <a
+        class="menu-card"
+        href="quizzes.html">
+
+        <div class="menu-icon">
+          ✏️
+        </div>
+
+        <h4>
+          Quizzes
+        </h4>
+
+        <p>
+          Test your knowledge.
+        </p>
+
+      </a>
+
+
+      <a
+        class="menu-card"
+        href="results.html">
+
+        <div class="menu-icon">
+          📊
+        </div>
+
+        <h4>
+          My Results
+        </h4>
+
+        <p>
+          View your quiz performance.
+        </p>
+
+      </a>
+
+    </div>
+
+
+    <!-- SECONDARY SUBJECTS -->
+
+    <div class="section-title">
+
+      <h3>
+        Secondary Subjects
+      </h3>
+
+      <p>
+        Your learning plan gives you access to the available subjects.
+      </p>
+
+    </div>
+
+
+    <div class="subjects">
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Mathematics">
+
+        <div class="subject-icon">
+          📐
+        </div>
+
+        <h4>
+          Mathematics
+        </h4>
+
+        <p>
+          Mathematics lessons and practice.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=English">
+
+        <div class="subject-icon">
+          📖
+        </div>
+
+        <h4>
+          English
+        </h4>
+
+        <p>
+          English language and comprehension.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Biology">
+
+        <div class="subject-icon">
+          🧬
+        </div>
+
+        <h4>
+          Biology
+        </h4>
+
+        <p>
+          Biology concepts and revision.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Chemistry">
+
+        <div class="subject-icon">
+          🧪
+        </div>
+
+        <h4>
+          Chemistry
+        </h4>
+
+        <p>
+          Chemistry lessons and exercises.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Physics">
+
+        <div class="subject-icon">
+          ⚛️
+        </div>
+
+        <h4>
+          Physics
+        </h4>
+
+        <p>
+          Physics theory and calculations.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Geography">
+
+        <div class="subject-icon">
+          🌍
+        </div>
+
+        <h4>
+          Geography
+        </h4>
+
+        <p>
+          Geography topics and revision.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=History">
+
+        <div class="subject-icon">
+          🏛️
+        </div>
+
+        <h4>
+          History
+        </h4>
+
+        <p>
+          History topics and study materials.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Civic Education">
+
+        <div class="subject-icon">
+          ⚖️
+        </div>
+
+        <h4>
+          Civic Education
+        </h4>
+
+        <p>
+          Civic knowledge and examination preparation.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Principles of Accounts">
+
+        <div class="subject-icon">
+          🧮
+        </div>
+
+        <h4>
+          Principles of Accounts
+        </h4>
+
+        <p>
+          Accounting principles and practice.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+
+      <a
+        class="subject"
+        href="lessons.html?subject=Computer Studies">
+
+        <div class="subject-icon">
+          💻
+        </div>
+
+        <h4>
+          Computer Studies
+        </h4>
+
+        <p>
+          Computer studies and ICT concepts.
+        </p>
+
+        <span class="subject-action">
+          View Subject →
+        </span>
+
+      </a>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+
+    <div class="payment">
+
+      <h3>
+        🔒 Unlock Your Learning
+      </h3>
+
+      <p>
+        This platform provides access to secondary learning materials
+        through payment. Once your payment has been confirmed,
+        your learning access will be activated.
+      </p>
+
+      <a
+        class="payment-button"
+        href="payment.html">
+
+        Make Payment
+
+      </a>
+
+    </div>
+
+
+  </main>
+
+
+  <footer class="footer">
+
+    © 2026 Mule Learner Tuition.
+    All rights reserved.
+
+  </footer>
+
+</div>
+
+
+<script>
+
+const studentName =
+  localStorage.getItem("studentName");
+
+
+if(studentName){
+
+  document
+  .getElementById("welcomeName")
+  .textContent =
+    "Welcome, " +
+    studentName +
+    "! 👋";
+
+}
+
+
+function logout(){
+
+  localStorage.removeItem("learnerLoggedIn");
+  localStorage.removeItem("learnerUID");
+
+  window.location.href =
+    "login.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Class - Mule Learner Tuition</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    .app {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      background: white;
+      padding-bottom: 30px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #173b8f, #2563eb);
+      color: white;
+      padding: 22px 20px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .back {
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    header h1 {
+      font-size: 23px;
+    }
+
+    header p {
+      margin-top: 7px;
+      font-size: 13px;
+      opacity: .9;
+    }
+
+    main {
+      padding: 22px 18px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d9e0eb;
+      border-radius: 11px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+    }
+
+    .button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .success {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      color: #166534;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+
+    <div class="back" onclick="history.back()">
+      ← Back
+    </div>
+
+    <h1>🎥 Create Online Class</h1>
+
+    <p>Schedule a class for your learners.</p>
+
+  </header>
+
+  <main>
+
+    <div class="field">
+      <label>Subject</label>
+
+      <select id="subject">
+        <option value="">Select subject</option>
+        <option>Mathematics</option>
+        <option>Computer Studies</option>
+        <option>English</option>
+        <option>Science</option>
+        <option>Chemistry</option>
+        <option>Biology</option>
+        <option>Social Studies</option>
+        <option>Civic Education</option>
+      </select>
+    </div>
+
+
+    <div class="field">
+      <label>Grade</label>
+
+      <select id="grade">
+        <option value="">Select grade</option>
+        <option>Grade 8</option>
+        <option>Grade 9</option>
+        <option>Grade 10</option>
+        <option>Grade 11</option>
+        <option>Grade 12</option>
+      </select>
+    </div>
+
+
+    <div class="field">
+      <label>Lesson Title</label>
+
+      <input
+        type="text"
+        id="title"
+        placeholder="Example: Introduction to Algebra"
+      >
+    </div>
+
+
+    <div class="field">
+      <label>Date</label>
+
+      <input type="date" id="date">
+    </div>
+
+
+    <div class="field">
+      <label>Time</label>
+
+      <input type="time" id="time">
+    </div>
+
+
+    <div class="field">
+      <label>Live Class Link</label>
+
+      <input
+        type="url"
+        id="link"
+        placeholder="Paste your live class link"
+      >
+    </div>
+
+
+    <button class="button" onclick="createClass()">
+      Create Class
+    </button>
+
+
+    <div class="success" id="success">
+      ✅ Class created successfully!
+      <br><br>
+      Your learners can now see the scheduled class.
+    </div>
+
+  </main>
+
+</div>
+
+
+<script>
+
+function createClass() {
+
+  let subject = document.getElementById("subject").value;
+  let grade = document.getElementById("grade").value;
+  let title = document.getElementById("title").value;
+  let date = document.getElementById("date").value;
+  let time = document.getElementById("time").value;
+  let link = document.getElementById("link").value;
+
+  if (
+    subject === "" ||
+    grade === "" ||
+    title === "" ||
+    date === "" ||
+    time === "" ||
+    link === ""
+  ) {
+    alert("Please complete all fields.");
+    return;
+  }
+
+  localStorage.setItem("classSubject", subject);
+  localStorage.setItem("classGrade", grade);
+  localStorage.setItem("classTitle", title);
+  localStorage.setItem("classDate", date);
+  localStorage.setItem("classTime", time);
+  localStorage.setItem("classLink", link);
+
+  document.getElementById("success").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>

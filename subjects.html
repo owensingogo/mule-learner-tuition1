@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173b8f">
+
+<title>Secondary Subjects | Mule Learner Tuition</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+}
+
+.app{
+  max-width:1100px;
+  min-height:100vh;
+  margin:auto;
+}
+
+.header{
+  background:#173b8f;
+  color:white;
+  padding:18px 20px;
+  border-radius:0 0 20px 20px;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.logo{
+  width:46px;
+  height:46px;
+  border-radius:13px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
+
+.brand h1{
+  font-size:17px;
+}
+
+.brand p{
+  margin-top:3px;
+  font-size:10px;
+  opacity:.8;
+}
+
+.back{
+  color:white;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.35);
+  padding:8px 11px;
+  border-radius:9px;
+  font-size:11px;
+}
+
+.main{
+  padding:20px;
+}
+
+.intro{
+  background:white;
+  border:1px solid #e1e7ef;
+  border-radius:17px;
+  padding:20px;
+}
+
+.intro h2{
+  font-size:22px;
+}
+
+.intro p{
+  margin-top:7px;
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.notice{
+  margin-top:14px;
+  padding:12px;
+  border-radius:11px;
+  background:#eff6ff;
+  color:#1e40af;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.section-title{
+  margin:25px 0 13px;
+}
+
+.section-title h3{
+  font-size:18px;
+}
+
+.section-title p{
+  margin-top:4px;
+  color:#6b7280;
+  font-size:12px;
+}
+
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.subject{
+  background:white;
+  border:1px solid #e1e7ef;
+  border-radius:16px;
+  padding:18px;
+  text-decoration:none;
+  color:#172033;
+  transition:.2s;
+}
+
+.subject:hover{
+  border-color:#2563eb;
+  transform:translateY(-2px);
+}
+
+.icon{
+  width:46px;
+  height:46px;
+  border-radius:13px;
+  background:#eff6ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
+
+.subject h4{
+  margin-top:13px;
+  font-size:15px;
+}
+
+.subject p{
+  margin-top:6px;
+  color:#6b7280;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.action{
+  display:inline-block;
+  margin-top:13px;
+  color:#2563eb;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.footer{
+  text-align:center;
+  padding:30px 20px;
+  color:#8a94a6;
+  font-size:11px;
+}
+
+@media(max-width:700px){
+  .subjects{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:450px){
+  .main{
+    padding:15px;
+  }
+
+  .subjects{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+  <div class="header-top">
+
+    <div class="brand">
+
+      <div class="logo">
+        📚
+      </div>
+
+      <div>
+        <h1>MULE LEARNER TUITION</h1>
+        <p>Learn • Practice • Succeed</p>
+      </div>
+
+    </div>
+
+    <a
+      href="learner-dashboard.html"
+      class="back">
+
+      ← Dashboard
+
+    </a>
+
+  </div>
+
+</header>
+
+
+<main class="main">
+
+  <section class="intro">
+
+    <h2>
+      Secondary Subjects
+    </h2>
+
+    <p>
+      Explore your available secondary school subjects,
+      lessons, practice activities and quizzes.
+    </p>
+
+    <div class="notice">
+      🔒 Lessons remain locked until your learning
+      payment has been confirmed by administration.
+    </div>
+
+  </section>
+
+
+  <div class="section-title">
+
+    <h3>
+      Available Subjects
+    </h3>
+
+    <p>
+      Select a subject to view its learning materials.
+    </p>
+
+  </div>
+
+
+  <div class="subjects">
+
+
+    <a class="subject"
+       href="lessons.html?subject=Mathematics">
+
+      <div class="icon">📐</div>
+
+      <h4>Mathematics</h4>
+
+      <p>
+        Mathematics theory, examples,
+        exercises and revision.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=English">
+
+      <div class="icon">📖</div>
+
+      <h4>English</h4>
+
+      <p>
+        Language, comprehension,
+        grammar and writing.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Biology">
+
+      <div class="icon">🧬</div>
+
+      <h4>Biology</h4>
+
+      <p>
+        Biology concepts, diagrams
+        and examination revision.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Chemistry">
+
+      <div class="icon">🧪</div>
+
+      <h4>Chemistry</h4>
+
+      <p>
+        Chemistry concepts,
+        calculations and practice.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Physics">
+
+      <div class="icon">⚛️</div>
+
+      <h4>Physics</h4>
+
+      <p>
+        Physics theory,
+        calculations and revision.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Geography">
+
+      <div class="icon">🌍</div>
+
+      <h4>Geography</h4>
+
+      <p>
+        Geography topics,
+        maps and revision materials.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=History">
+
+      <div class="icon">🏛️</div>
+
+      <h4>History</h4>
+
+      <p>
+        Historical topics,
+        events and examination revision.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Civic Education">
+
+      <div class="icon">⚖️</div>
+
+      <h4>Civic Education</h4>
+
+      <p>
+        Civic knowledge,
+        rights, responsibilities and governance.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Principles of Accounts">
+
+      <div class="icon">🧮</div>
+
+      <h4>Principles of Accounts</h4>
+
+      <p>
+        Accounting principles,
+        records and practice.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Computer Studies">
+
+      <div class="icon">💻</div>
+
+      <h4>Computer Studies</h4>
+
+      <p>
+        Computer studies,
+        ICT concepts and practical learning.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=French">
+
+      <div class="icon">🗣️</div>
+
+      <h4>French</h4>
+
+      <p>
+        French language,
+        vocabulary and communication.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+    <a class="subject"
+       href="lessons.html?subject=Religious Education">
+
+      <div class="icon">📘</div>
+
+      <h4>Religious Education</h4>
+
+      <p>
+        Religious Education topics,
+        values and examination preparation.
+      </p>
+
+      <span class="action">
+        View Subject →
+      </span>
+
+    </a>
+
+
+  </div>
+
+</main>
+
+
+<footer class="footer">
+
+  © 2026 Mule Learner Tuition.
+  All rights reserved.
+
+</footer>
+
+</div>
+
+</body>
+</html>

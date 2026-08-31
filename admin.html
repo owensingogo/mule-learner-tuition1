@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173b8f">
+
+<title>Admin Dashboard | Mule Learner Tuition</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+}
+
+.app{
+  min-height:100vh;
+}
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:240px;
+  background:#102d70;
+  color:white;
+  padding:20px 15px;
+  z-index:20;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:5px 8px 25px;
+}
+
+.logo{
+  width:43px;
+  height:43px;
+  border-radius:12px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+}
+
+.brand h1{
+  font-size:14px;
+}
+
+.brand p{
+  margin-top:3px;
+  font-size:9px;
+  opacity:.75;
+}
+
+.menu-title{
+  color:#91a4cf;
+  font-size:9px;
+  font-weight:bold;
+  text-transform:uppercase;
+  margin:14px 9px 8px;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#dbe5ff;
+  text-align:left;
+  padding:11px;
+  border-radius:9px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:#2563eb;
+  color:white;
+}
+
+.admin-info{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:20px;
+  padding:12px;
+  border-top:1px solid rgba(255,255,255,.12);
+  font-size:10px;
+}
+
+.admin-info strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.main{
+  margin-left:240px;
+  min-height:100vh;
+}
+
+.topbar{
+  height:70px;
+  background:white;
+  border-bottom:1px solid #e4e9f0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+}
+
+.topbar h2{
+  font-size:19px;
+}
+
+.topbar p{
+  margin-top:3px;
+  color:#7a8495;
+  font-size:11px;
+}
+
+.logout{
+  background:#f3f4f6;
+  border:0;
+  padding:9px 13px;
+  border-radius:9px;
+  color:#374151;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.content{
+  padding:25px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.stat{
+  background:white;
+  border:1px solid #e2e7ef;
+  border-radius:14px;
+  padding:18px;
+}
+
+.stat-icon{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:#eff6ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:19px;
+}
+
+.stat h3{
+  margin-top:13px;
+  font-size:25px;
+}
+
+.stat p{
+  margin-top:4px;
+  color:#7a8495;
+  font-size:11px;
+}
+
+.panel{
+  background:white;
+  border:1px solid #e2e7ef;
+  border-radius:15px;
+  margin-top:20px;
+  overflow:hidden;
+}
+
+.panel-header{
+  padding:17px 18px;
+  border-bottom:1px solid #edf0f4;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.panel-header h3{
+  font-size:15px;
+}
+
+.panel-header p{
+  margin-top:4px;
+  color:#7a8495;
+  font-size:10px;
+}
+
+.primary{
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:9px 12px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+
+th{
+  background:#f8fafc;
+  color:#667085;
+  font-size:10px;
+  text-align:left;
+  padding:12px 15px;
+}
+
+td{
+  border-top:1px solid #edf0f4;
+  padding:13px 15px;
+  font-size:11px;
+}
+
+.empty{
+  text-align:center;
+  color:#8a94a6;
+  padding:30px;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:9px;
+  font-weight:bold;
+}
+
+.pending{
+  background:#fff7ed;
+  color:#c2410c;
+}
+
+.approved{
+  background:#f0fdf4;
+  color:#15803d;
+}
+
+.rejected{
+  background:#fef2f2;
+  color:#dc2626;
+}
+
+.active-status{
+  background:#f0fdf4;
+  color:#15803d;
+}
+
+.inactive{
+  background:#f3f4f6;
+  color:#6b7280;
+}
+
+.actions{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.action{
+  border:0;
+  border-radius:7px;
+  padding:7px 9px;
+  font-size:9px;
+  cursor:pointer;
+}
+
+.approve{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.reject{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.remove{
+  background:#f3f4f6;
+  color:#4b5563;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  padding:20px;
+}
+
+.field label{
+  display:block;
+  font-size:10px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:11px;
+  border:1px solid #d9e0eb;
+  border-radius:9px;
+  outline:none;
+  font-size:11px;
+}
+
+.full{
+  grid-column:1 / -1;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:50;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:430px;
+  border-radius:17px;
+  padding:22px;
+}
+
+.modal-box h3{
+  font-size:18px;
+}
+
+.modal-box p{
+  margin-top:6px;
+  color:#6b7280;
+  font-size:11px;
+}
+
+.modal-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+}
+
+.modal-actions button{
+  flex:1;
+  padding:11px;
+  border:0;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.cancel{
+  background:#e5e7eb;
+}
+
+.save{
+  background:#2563eb;
+  color:white;
+}
+
+.mobile-menu{
+  display:none;
+  border:0;
+  background:#f3f4f6;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+@media(max-width:900px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.2s;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .mobile-menu{
+    display:inline-block;
+    margin-right:8px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:550px){
+
+  .content{
+    padding:15px;
+  }
+
+  .topbar{
+    padding:0 15px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .stats{
+    gap:9px;
+  }
+
+  .stat{
+    padding:13px;
+  }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside id="sidebar" class="sidebar">
+
+  <div class="brand">
+
+    <div class="logo">📚</div>
+
+    <div>
+      <h1>MULE LEARNER</h1>
+      <p>ADMINISTRATION</p>
+    </div>
+
+  </div>
+
+  <div class="menu-title">
+    Management
+  </div>
+
+  <nav class="nav">
+
+    <button class="active"
+      onclick="showSection('overview',this)">
+      📊 Dashboard
+    </button>
+
+    <button onclick="showSection('payments',this)">
+      💳 Payments
+    </button>
+
+    <button onclick="showSection('learners',this)">
+      👨‍🎓 Learners
+    </button>
+
+    <button onclick="showSection('teachers',this)">
+      👨‍🏫 Teachers
+    </button>
+
+    <button onclick="showSection('subjects',this)">
+      📚 Subjects
+    </button>
+
+    <button onclick="showSection('settings',this)">
+      ⚙️ Settings
+    </button>
+
+  </nav>
+
+  <div class="admin-info">
+
+    <strong>Administrator</strong>
+
+    <span>Mule Learner Tuition</span>
+
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div>
+
+    <button class="mobile-menu"
+      onclick="toggleSidebar()">
+      ☰
+    </button>
+
+    <h2 id="pageTitle">
+      Dashboard
+    </h2>
+
+    <p id="pageDescription">
+      Overview of your learning platform
+    </p>
+
+  </div>
+
+  <button class="logout"
+    onclick="adminLogout()">
+    Logout
+  </button>
+
+</header>
+
+
+<div class="content">
+
+
+<!-- DASHBOARD -->
+
+<section id="overview"
+  class="section active">
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">👨‍🎓</div>
+      <h3 id="learnerCount">0</h3>
+      <p>Registered Learners</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">💳</div>
+      <h3 id="pendingCount">0</h3>
+      <p>Pending Payments</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">👨‍🏫</div>
+      <h3 id="teacherCount">0</h3>
+      <p>Teachers</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🔓</div>
+      <h3 id="activeCount">0</h3>
+      <p>Active Learners</p>
+    </div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Recent Payment Requests</h3>
+        <p>Review learner payment requests.</p>
+      </div>
+
+      <button class="primary"
+        onclick="showSectionByName('payments')">
+        View All
+      </button>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Learner</th>
+            <th>Plan</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="recentPayments"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAYMENTS -->
+
+<section id="payments"
+  class="section">
+
+  <div class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Payment Requests</h3>
+        <p>
+          Verify payments before activating access.
+        </p>
+      </div>
+
+      <button class="primary"
+        onclick="loadPayments()">
+        Refresh
+      </button>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Learner</th>
+            <th>Plan</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="paymentsTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LEARNERS -->
+
+<section id="learners"
+  class="section">
+
+  <div class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Registered Learners</h3>
+        <p>
+          Manage learner accounts and access.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Grade</th>
+            <th>Access</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="learnersTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TEACHERS -->
+
+<section id="teachers"
+  class="section">
+
+  <div class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Teacher Management</h3>
+        <p>
+          Hire, activate, deactivate and remove teachers.
+        </p>
+      </div>
+
+      <button class="primary"
+        onclick="openTeacherModal()">
+        + Hire Teacher
+      </button>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="teachersTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SUBJECTS -->
+
+<section id="subjects"
+  class="section">
+
+  <div class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Subjects & Learning Content</h3>
+        <p>
+          Subjects available on Mule Learner Tuition.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Subject</th>
+            <th>Category</th>
+            <th>Status</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Mathematics</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>English</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>Biology</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>Chemistry</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>Physics</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>Geography</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>History</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>Civic Education</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+          <tr>
+            <td>Computer Studies</td>
+            <td>Secondary</td>
+            <td><span class="status active-status">Active</span></td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="settings"
+  class="section">
+
+  <div class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h3>Administration Settings</h3>
+        <p>
+          Mule Learner Tuition payment information.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Platform Name</label>
+        <input value="Mule Learner Tuition" readonly>
+      </div>
+
+      <div class="field">
+        <label>Account Name</label>
+        <input value="SINGOGO OWEN" readonly>
+      </div>
+
+      <div class="field">
+        <label>Airtel Money</label>
+        <input value="0978362800" readonly>
+      </div>
+
+      <div class="field">
+        <label>MTN Money</label>
+        <input value="0768217115" readonly>
+      </div>
+
+      <div class="field">
+        <label>Zamtel Money</label>
+        <input value="0750840210" readonly>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- TEACHER MODAL -->
+
+<div id="teacherModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <h3>Hire Teacher</h3>
+
+    <p>
+      Add a teacher to your teaching team.
+    </p>
+
+
+    <div class="form-grid"
+      style="padding:18px 0 0;">
+
+      <div class="field">
+
+        <label>Full Name</label>
+
+        <input id="teacherName"
+          placeholder="Teacher name">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Phone Number</label>
+
+        <input id="teacherPhone"
+          placeholder="Phone number">
+
+      </div>
+
+
+      <div class="field full">
+
+        <label>Subject</label>
+
+        <select id="teacherSubject">
+
+          <option value="">
+            Select subject
+          </option>
+
+          <option>Mathematics</option>
+          <option>English</option>
+          <option>Biology</option>
+          <option>Chemistry</option>
+          <option>Physics</option>
+          <option>Geography</option>
+          <option>History</option>
+          <option>Civic Education</option>
+          <option>Computer Studies</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button class="cancel"
+        onclick="closeTeacherModal()">
+        Cancel
+      </button>
+
+      <button class="save"
+        onclick="hireTeacher()">
+        Hire Teacher
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  app,
+  auth
+} from "./firebase.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* FIRESTORE */
+
+const db = getFirestore(app);
+
+
+/* COLLECTIONS */
+
+const PAYMENTS = "paymentRequests";
+const TEACHERS = "teachers";
+const LEARNERS = "learners";
+
+
+/* NAVIGATION */
+
+window.showSection = function(name,button){
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
+
+
+  document
+    .getElementById(name)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(item=>{
+      item.classList.remove("active");
+    });
+
+
+  if(button){
+    button.classList.add("active");
+  }
+
+
+  const titles = {
+
+    overview:[
+      "Dashboard",
+      "Overview of your learning platform"
+    ],
+
+    payments:[
+      "Payments",
+      "Review learner payment requests"
+    ],
+
+    learners:[
+      "Learners",
+      "Manage learner accounts"
+    ],
+
+    teachers:[
+      "Teachers",
+      "Manage your teaching team"
+    ],
+
+    subjects:[
+      "Subjects",
+      "Manage learning content"
+    ],
+
+    settings:[
+      "Settings",
+      "Platform administration settings"
+    ]
+
+  };
+
+
+  document
+    .getElementById("pageTitle")
+    .textContent=titles[name][0];
+
+
+  document
+    .getElementById("pageDescription")
+    .textContent=titles[name][1];
+
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+
+  if(name==="payments"){
+    loadPayments();
+  }
+
+  if(name==="learners"){
+    loadLearners();
+  }
+
+  if(name==="teachers"){
+    loadTeachers();
+  }
+
+};
+
+
+window.showSectionByName=function(name){
+
+  const buttons=
+    document.querySelectorAll(".nav button");
+
+  let selected=null;
+
+  buttons.forEach(button=>{
+
+    if(
+      button
+      .getAttribute("onclick")
+      ?.includes("'" + name + "'")
+    ){
+      selected=button;
+    }
+
+  });
+
+  window.showSection(name,selected);
+
+};
+
+
+window.toggleSidebar=function(){
+
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
+
+};
+
+
+/* PAYMENT STATUS */
+
+function statusBadge(status){
+
+  if(status==="approved"){
+
+    return `
+      <span class="status approved">
+        Approved
+      </span>
+    `;
+
+  }
+
+  if(status==="rejected"){
+
+    return `
+      <span class="status rejected">
+        Rejected
+      </span>
+    `;
+
+  }
+
+  return `
+    <span class="status pending">
+      Pending
+    </span>
+  `;
+
+}
+
+
+/* LOAD PAYMENTS */
+
+async function loadPayments(){
+
+  const table=
+    document.getElementById("paymentsTable");
+
+  const recent=
+    document.getElementById("recentPayments");
+
+
+  table.innerHTML=`
+    <tr>
+      <td colspan="7" class="empty">
+        Loading payment requests...
+      </td>
+    </tr>
+  `;
+
+
+  try{
+
+    const snapshot=
+      await getDocs(collection(db,PAYMENTS));
+
+
+    const payments=
+      snapshot.docs.map(item=>({
+
+        id:item.id,
+        ...item.data()
+
+      }));
+
+
+    updateDashboardStats(payments);
+
+
+    if(!payments.length){
+
+      table.innerHTML=`
+        <tr>
+          <td colspan="7" class="empty">
+            No payment requests yet.
+          </td>
+        </tr>
+      `;
+
+      recent.innerHTML=`
+        <tr>
+          <td colspan="5" class="empty">
+            No payment requests yet.
+          </td>
+        </tr>
+      `;
+
+      return;
+
+    }
+
+
+    table.innerHTML=
+      payments.map(item=>{
+
+        const date=
+          item.submittedAt
+          ? new Date(
+              item.submittedAt
+            ).toLocaleDateString()
+          : "—";
+
+
+        return `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(item.learnerName||"Learner")}
+            </td>
+
+            <td>
+              ${escapeHtml(item.plan||"—")}
+            </td>
+
+            <td>
+              K${item.amount||0}
+            </td>
+
+            <td>
+              ${escapeHtml(item.paymentMethod||"—")}
+            </td>
+
+            <td>
+              ${date}
+            </td>
+
+            <td>
+              ${statusBadge(item.status)}
+            </td>
+
+            <td>
+
+              ${
+                item.status==="pending"
+
+                ?
+
+                `
+
+                <div class="actions">
+
+                  <button
+                    class="action approve"
+                    onclick="approvePayment('${item.id}','${item.learnerUID||""}')">
+
+                    Approve
+
+                  </button>
+
+                  <button
+                    class="action reject"
+                    onclick="rejectPayment('${item.id}')">
+
+                    Reject
+
+                  </button>
+
+                </div>
+
+                `
+
+                :
+
+                `<span style="color:#8a94a6;font-size:9px;">
+                  Reviewed
+                </span>`
+              }
+
+       
